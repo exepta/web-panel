@@ -2,7 +2,7 @@ package net.exsorce.webpanel;
 
 import lombok.RequiredArgsConstructor;
 
-import org.pheanixarea.webpanel.service.UserService;
+import net.exsorce.webpanel.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
