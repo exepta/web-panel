@@ -2,12 +2,15 @@ package net.exsorce.webpanel;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class WebPanelApplication {
+public class WebPanelApplication extends SpringBootServletInitializer
+{
 
-    public static void main(String[] args) {
-        SpringApplication.run(WebPanelApplication.class, args);
-    }
+	public static void main ( String[] args )
+	{
+		SpringApplication.run( WebPanelApplication.class, args );
+	}
 
 }
