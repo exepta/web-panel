@@ -1,9 +1,12 @@
 import React from 'react';
 import '../resources/App.css';
+import Authentication from "./components/Authentication";
 
 function App() {
   return (
-      <div></div>
+      <div className="App">
+        <Authentication />
+      </div>
   );
 }
 
