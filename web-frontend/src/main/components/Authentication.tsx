@@ -1,5 +1,7 @@
 import '../../resources/pages/auth/auth.css';
 import {useEffect, useRef, useState} from "react";
+import {isAuthenticated, REST_POINT} from "../services/AuthService";
+import axios from "axios";
 
 import GoogleIcon from '@mui/icons-material/Google';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -9,12 +11,9 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
-import axios from "axios";
 
 const USER_NAME_PATTERN = /^[a-zA-Z][a-zA-Z0-9-_]{3,25}$/;
 const PASSWORD_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*<>/?]).{8,128}$/;
-
-const REST_POINT = 'http://localhost:8080/api/v0/auth/';
 
 const Authentication = () => {
 
@@ -61,6 +60,7 @@ const Authentication = () => {
 
         if(localStorage.getItem('JWT') !== null) {
             console.log('Currently is a jwt token in use!');
+            console.log('Is Online: ' + await isAuthenticated());
             return;
         }
 
@@ -76,7 +76,7 @@ const Authentication = () => {
             }).then(response => {
 
             if(response.status === 200) {
-                localStorage.setItem('JWT', 'Bearer ' + response.data.access_token);
+                localStorage.setItem('JWT', response.data.access_token);
                 console.log('using jwt: Bearer ' + response.data.access_token);
             }
 
@@ -89,6 +89,8 @@ const Authentication = () => {
                 console.log("Error [ " + status + " ] info: " + response.data.message);
             }
         });
+
+        console.log('Is Online: ' + await isAuthenticated());
     }
 
     const handleRegister :any = async (event :Event) => {
@@ -181,7 +183,9 @@ const Authentication = () => {
                                 <p className="help">Problems by creating new account?</p>
                             </div>
 
-                            <button type="submit" className="send">Sign Up</button>
+                            <button type="submit" className="send" disabled={(!validEmail || !validUsername || !validPassword)}>
+                                Sign Up
+                            </button>
 
                             <h3>Already a member or social login?</h3>
                             <div className="switch" onClick={event => {setSwap(false)}}>Login</div>
@@ -238,7 +242,9 @@ const Authentication = () => {
                                 <p className="help">Forgot password?</p>
                             </div>
 
-                            <button type="submit" className="send">Login</button>
+                            <button type="submit" className="send" disabled={(!validEmail || !validPassword)}>
+                                Login
+                            </button>
 
                             <h3>You can use Social login's</h3>
 

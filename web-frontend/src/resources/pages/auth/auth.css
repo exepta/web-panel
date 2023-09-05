@@ -135,6 +135,12 @@ form .send {
     font-weight: bold;
     margin: 10px 20px;
     box-shadow: 2px 5px 5px rgba(147, 147, 150, 0.23);
+    transition: .4s all;
+}
+
+.send:disabled {
+    background: linear-gradient(to right, rgba(78, 190, 201, 0.4), rgba(67, 210, 210, 0.4), rgba(141, 67, 210, 0.4), rgba(200, 67, 210, 0.4));
+    cursor: not-allowed;
 }
 
 form h3 {

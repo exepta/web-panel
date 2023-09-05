@@ -12,13 +12,13 @@ import net.exsorce.webpanel.rest.response.AbstractResponse;
 import net.exsorce.webpanel.rest.response.AuthenticationResponse;
 import net.exsorce.webpanel.rest.response.ErrorResponse;
 import net.exsorce.webpanel.service.AuthenticationService;
+import net.exsorce.webpanel.service.JWTService;
 import net.exsorce.webpanel.service.UserService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @since 0.0.1-SNAPSHOT
@@ -32,6 +32,7 @@ public class AuthenticationRestController
 
 	private final AuthenticationService authenticationService;
 	private final UserService userService;
+	private final JWTService jwtService;
 
 	@PostMapping("/register")
 	public ResponseEntity<AbstractResponse> register (@RequestBody RegisterRequest request )
@@ -49,6 +50,11 @@ public class AuthenticationRestController
 		return ResponseEntity.ok( authenticationService.authenticate( request ) );
 	}
 
+	@GetMapping("/check-user")
+	public ResponseEntity<Boolean> checkUser (@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+		UserDetails details = userService.loadUserByUsername(jwtService.extractUserData(token.replace("Bearer ", "")));
+		return ResponseEntity.ok(jwtService.isValid(token, details));
+	}
 
 	@PostMapping("/refresh-token")
 	public void refreshToken ( HttpServletRequest request, HttpServletResponse response ) throws IOException
