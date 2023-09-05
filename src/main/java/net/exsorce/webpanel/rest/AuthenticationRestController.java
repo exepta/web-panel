@@ -8,8 +8,12 @@ import java.io.IOException;
 
 import net.exsorce.webpanel.rest.request.AuthenticationRequest;
 import net.exsorce.webpanel.rest.request.RegisterRequest;
+import net.exsorce.webpanel.rest.response.AbstractResponse;
 import net.exsorce.webpanel.rest.response.AuthenticationResponse;
+import net.exsorce.webpanel.rest.response.ErrorResponse;
 import net.exsorce.webpanel.service.AuthenticationService;
+import net.exsorce.webpanel.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,15 +31,20 @@ public class AuthenticationRestController
 {
 
 	private final AuthenticationService authenticationService;
+	private final UserService userService;
 
 	@PostMapping("/register")
-	public ResponseEntity< AuthenticationResponse > register ( @RequestBody RegisterRequest request )
+	public ResponseEntity<AbstractResponse> register (@RequestBody RegisterRequest request )
 	{
+		if(userService.exist( request.getEmail() )) {
+			return ResponseEntity.status(HttpStatus.FOUND).body(ErrorResponse.builder()
+					.message("E-Mail already in use!").code(HttpStatus.FOUND.value()).build());
+		}
 		return ResponseEntity.ok( authenticationService.register( request ) );
 	}
 
 	@PostMapping("/authenticate")
-	public ResponseEntity<AuthenticationResponse> register ( @RequestBody AuthenticationRequest request )
+	public ResponseEntity<AbstractResponse> register ( @RequestBody AuthenticationRequest request )
 	{
 		return ResponseEntity.ok( authenticationService.authenticate( request ) );
 	}

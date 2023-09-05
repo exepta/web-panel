@@ -9,9 +9,12 @@ import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockIcon from '@mui/icons-material/Lock';
 import PersonIcon from '@mui/icons-material/Person';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import axios from "axios";
 
 const USER_NAME_PATTERN = /^[a-zA-Z][a-zA-Z0-9-_]{3,25}$/;
-const PASSWORD_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)([!@#$%^&*<>/?]).{8,}$/;
+const PASSWORD_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*<>/?]).{8,128}$/;
+
+const REST_POINT = 'http://localhost:8080/api/v0/auth/';
 
 const Authentication = () => {
 
@@ -51,15 +54,74 @@ const Authentication = () => {
 
         const checkMail = email.includes('@');
         const checkPassword = PASSWORD_PATTERN.test(password);
+
         if(!checkMail || !checkPassword) {
             return;
         }
 
-        //Todo: Fetch here
+        if(localStorage.getItem('JWT') !== null) {
+            console.log('Currently is a jwt token in use!');
+            return;
+        }
+
+        await axios.post(REST_POINT + 'authenticate',
+            { email: email, password: password },
+            {
+                headers:
+                    {
+                        'Accept': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                        'Content-Type': 'application/json'
+                    }
+            }).then(response => {
+
+            if(response.status === 200) {
+                localStorage.setItem('JWT', 'Bearer ' + response.data.access_token);
+                console.log('using jwt: Bearer ' + response.data.access_token);
+            }
+
+        }).catch(error => {
+            if(error.response) {
+                let status :number = error.response.status;
+                let response = error.response;
+
+                //Todo: better error handling...
+                console.log("Error [ " + status + " ] info: " + response.data.message);
+            }
+        });
     }
 
     const handleRegister :any = async (event :Event) => {
         event.preventDefault();
+
+        const checkUser = USER_NAME_PATTERN.test(username);
+        const checkMail = email.includes('@');
+        const checkPassword = PASSWORD_PATTERN.test(password);
+
+        if(!checkMail || !checkUser || !checkPassword) {
+            return;
+        }
+
+        await axios.post(REST_POINT + 'register',
+            { username: username, email: email, password: password },
+            {
+                headers:
+                    {
+                        'Accept': 'application/json',
+                        'Access-Control-Allow-Origin': '*',
+                        'Content-Type': 'application/json'
+                    }
+            }).then(response => {
+
+        }).catch(error => {
+            if(error.response) {
+                let status :number = error.response.status;
+                let response = error.response;
+
+                //Todo: better error handling...
+                console.log("Error [ " + status + " ] info: " + response.data.message);
+            }
+        });
     }
 
     return (
@@ -116,7 +178,7 @@ const Authentication = () => {
                             </div>
 
                             <div className="text-con">
-                                <p>Problems by creating new account?</p>
+                                <p className="help">Problems by creating new account?</p>
                             </div>
 
                             <button type="submit" className="send">Sign Up</button>
@@ -173,7 +235,7 @@ const Authentication = () => {
                                     <VerifiedUserIcon className="check"/>
                                     <p>Remember me</p>
                                 </div>
-                                <p className="forgot">Forgot password?</p>
+                                <p className="help">Forgot password?</p>
                             </div>
 
                             <button type="submit" className="send">Login</button>

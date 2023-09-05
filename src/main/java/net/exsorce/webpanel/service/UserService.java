@@ -24,4 +24,12 @@ public class UserService implements UserDetailsService
 	{
 		return userRepository.findByEmail( username ).orElseThrow(() -> new UsernameNotFoundException( "User not found!" ));
 	}
+
+	public boolean exist( String email )
+	{
+		if(email == null || email.isBlank() || email.isEmpty())
+			return false;
+
+		return loadUserByUsername( email ) != null;
+	}
 }

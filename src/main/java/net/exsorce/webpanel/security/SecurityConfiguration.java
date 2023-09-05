@@ -13,6 +13,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
@@ -36,7 +38,8 @@ public class SecurityConfiguration
 	{
 		http.csrf( AbstractHttpConfigurer::disable )
 				.authorizeHttpRequests(builder -> builder
-						.requestMatchers( antMatcher("/api/v0/auth") )
+						.requestMatchers(
+								antMatcher("/api/v0/auth/**"))
 						.permitAll()
 						.anyRequest()
 						.authenticated())
@@ -50,6 +53,19 @@ public class SecurityConfiguration
 						.logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()));
 
 		return http.build();
+	}
+
+	@Bean
+	public WebMvcConfigurer configurer ()
+	{
+		return new WebMvcConfigurer()
+		{
+			@Override
+			public void addCorsMappings ( CorsRegistry registry )
+			{
+				registry.addMapping( "/**" ).allowedOrigins( "*" ).allowedHeaders( "*" );
+			}
+		};
 	}
 
 }
