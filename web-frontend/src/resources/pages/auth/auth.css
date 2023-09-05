@@ -1,12 +1,13 @@
 section {
     float: left;
-    width: 20%;
+    width: 475px;
     height: 850px;
     background: white;
     box-sizing: border-box;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 0 10px #adadad;
+    overflow: hidden;
 }
 
 section .sec-header {
@@ -22,12 +23,14 @@ section .sec-header {
 .sec-header h1 {
     font-size: 45px;
     font-weight: bolder;
+    color: #626267;
+    cursor: default;
 }
 
 section form {
     float: left;
     width: 100%;
-    height: 80%;
+    height: 75%;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -52,6 +55,7 @@ form .input-con {
     padding: 5px 10px;
     outline: none;
     background: transparent;
+    color: #626267;
 }
 
 .input-con .icon-box {
@@ -75,11 +79,43 @@ form .input-con {
     box-sizing: border-box;
     background: transparent;
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
+    align-items: center;
     padding: 0 2px 0 10px;
 }
 
-.text-con p {
+.text-con .remember {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 130px;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0 8px;
+}
+
+.remember p {
+    float: left;
+    color: #939396;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    cursor: default;
+}
+
+.remember .check {
+    float: left;
+    font-size: 20px;
+    cursor: pointer;
+    color: #c9c4c4;
+    transition: .3s all;
+}
+
+.remember .rem-act {
+    color: #8d43d2;
+}
+
+.text-con .forgot {
     font-size: 13px;
     color: #939396;
     cursor: pointer;
@@ -105,6 +141,7 @@ form h3 {
     color: #676769;
     font-size: 15px;
     margin: 20px 10px;
+    cursor: default;
 }
 
 form .social-box {
@@ -146,5 +183,61 @@ form .social-box {
 .twitter {
     color: white;
     background: #528ed5;
+}
+
+form .switch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+    width: 50%;
+    height: 45px;
+    border-radius: 25px;
+    border: none;
+    background: #fafafa;
+    color: #676769;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px 20px;
+    box-shadow: 2px 5px 5px rgba(147, 147, 150, 0.23);
+    cursor: pointer;
+    transition: .2s all;
+}
+
+.switch:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+section .sec-footer {
+    display: flex;
+    float: left;
+    justify-content: center;
+    align-items: center;
+    height: 5%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.sec-footer .container {
+    display: flex;
+    float: left;
+    justify-content: right;
+    height: 100%;
+    width: 75%;
+    box-sizing: border-box;
+    border-top: 1px solid #adadad;
+    padding: 2px 5px;
+}
+
+.sec-footer .container p {
+    color: #939396;
+    font-size: 13px;
+    cursor: pointer;
+    transition: .2s all;
+}
+
+.sec-footer .container p:hover {
+    color: #8d43d2;
 }
 
