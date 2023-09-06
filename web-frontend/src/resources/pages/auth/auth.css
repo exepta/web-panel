@@ -1,3 +1,13 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to top right, #4ebec9, #43d2d2, #8d43d2, #c843d2);
+}
+
 section {
     float: left;
     width: 475px;

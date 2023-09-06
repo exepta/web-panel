@@ -30,3 +30,7 @@ export const isAuthenticated = async () => {
 
     return login;
 }
+
+export const logout = () => {
+
+}

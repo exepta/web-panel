@@ -9,7 +9,6 @@ import java.io.IOException;
 import net.exsorce.webpanel.rest.request.AuthenticationRequest;
 import net.exsorce.webpanel.rest.request.RegisterRequest;
 import net.exsorce.webpanel.rest.response.AbstractResponse;
-import net.exsorce.webpanel.rest.response.AuthenticationResponse;
 import net.exsorce.webpanel.rest.response.ErrorResponse;
 import net.exsorce.webpanel.service.AuthenticationService;
 import net.exsorce.webpanel.service.JWTService;
@@ -37,6 +36,11 @@ public class AuthenticationRestController
 	@PostMapping("/register")
 	public ResponseEntity<AbstractResponse> register (@RequestBody RegisterRequest request )
 	{
+		if(request == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse.builder()
+					.message("Request was null!").code(HttpStatus.BAD_REQUEST.value()).build());
+		}
+
 		if(userService.exist( request.getEmail() )) {
 			return ResponseEntity.status(HttpStatus.FOUND).body(ErrorResponse.builder()
 					.message("E-Mail already in use!").code(HttpStatus.FOUND.value()).build());
@@ -47,11 +51,19 @@ public class AuthenticationRestController
 	@PostMapping("/authenticate")
 	public ResponseEntity<AbstractResponse> register ( @RequestBody AuthenticationRequest request )
 	{
+		if(request == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse.builder()
+					.message("Request was null!").code(HttpStatus.BAD_REQUEST.value()).build());
+		}
+
 		return ResponseEntity.ok( authenticationService.authenticate( request ) );
 	}
 
 	@GetMapping("/check-user")
 	public ResponseEntity<Boolean> checkUser (@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+		if(token == null) {
+			return ResponseEntity.ok(false);
+		}
 		UserDetails details = userService.loadUserByUsername(jwtService.extractUserData(token.replace("Bearer ", "")));
 		return ResponseEntity.ok(jwtService.isValid(token, details));
 	}

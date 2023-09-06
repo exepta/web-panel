@@ -1,12 +1,17 @@
 import React from 'react';
-import '../resources/App.css';
-import Authentication from "./components/Authentication";
+import Authentication from "./pages/Authentication";
+
+import { Routes, Route } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   return (
-      <div className="App">
-        <Authentication />
-      </div>
+      <Routes>
+          <Route path='/' element={<Dashboard />} />
+          <Route path='auth' element={<Authentication />} />
+          <Route path='*' element={<ErrorPage />} />
+      </Routes>
   );
 }
 
