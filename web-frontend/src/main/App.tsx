@@ -3,6 +3,7 @@ import Authentication from "./pages/Authentication";
 
 import { Routes, Route } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
+import StatsPage from "./pages/page/StatsPage";
 
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 
@@ -12,8 +13,9 @@ function App() {
           <Route path='/' element={
               <React.Suspense fallback="loading...">
                   <Dashboard />
-              </React.Suspense>}
-          />
+              </React.Suspense>}>
+              <Route path='stats' element={<StatsPage />} />
+          </Route>
           <Route path='auth' element={<Authentication />} />
           <Route path='*' element={<ErrorPage />} />
       </Routes>

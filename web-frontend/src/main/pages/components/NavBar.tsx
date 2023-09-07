@@ -9,6 +9,17 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 
+const showSideBar = () => {
+    const bar = document.querySelector('.side-bar');
+    if(bar !== null) {
+        if(!bar.classList.contains('side-bar-open')) {
+            bar.classList.add('side-bar-open');
+            return;
+        }
+        bar.classList.remove('side-bar-open');
+    }
+}
+
 const NavBar = (props :any) => {
     // Todo: give via props username and role
 
@@ -35,7 +46,7 @@ const NavBar = (props :any) => {
     return (
         <header>
             <div className="h-left">
-                <div className="menu-box">
+                <div className="menu-box" onClick={event => {showSideBar()}}>
                     <MenuIcon className="menu-icon"/>
                 </div>
             </div>

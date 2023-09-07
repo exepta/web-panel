@@ -1,7 +1,8 @@
 import {getUser} from "../services/AuthService";
 import {useEffect, useState} from "react";
 import NavBar from "./components/NavBar";
-import {useNavigate} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
+import SideBar from "./components/SideBar";
 
 const Dashboard = () => {
 
@@ -28,7 +29,8 @@ const Dashboard = () => {
     return (
         <>
             <NavBar user={user}/>
-
+            <SideBar />
+            <Outlet />
         </>
     );
 }
