@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 public abstract class AbstractResponse {
 
     @JsonProperty("responseType")
-    private String responseType;
+    private String responseType = getClass().getSimpleName();
 
 }

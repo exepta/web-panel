@@ -2,14 +2,14 @@ import axios from "axios";
 
 export const REST_POINT = 'http://localhost:8080/api/v0/auth/';
 
-export const isAuthenticated = async () => {
-    let login = false;
+export const getUser = async () => {
+    let login = undefined;
     const key = localStorage.getItem('JWT');
     if(key === null) {
         return false;
     }
 
-    await axios.get(REST_POINT + 'check-user',
+    await axios.get(REST_POINT + 'currentUser',
         { headers:
                 {
                     'Authorization': key,
@@ -22,15 +22,11 @@ export const isAuthenticated = async () => {
         login = response.data;
     }).catch(error => {
         if(error.response) {
-
+            console.log('error')
         } else {
             console.log('Cant connect to server!'); //Todo: better handling.
         }
     });
 
     return login;
-}
-
-export const logout = () => {
-
 }

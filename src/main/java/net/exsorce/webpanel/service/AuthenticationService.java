@@ -16,6 +16,7 @@ import net.exsorce.webpanel.rest.request.RegisterRequest;
 import net.exsorce.webpanel.rest.response.AuthenticationResponse;
 import net.exsorce.webpanel.model.User;
 import net.exsorce.webpanel.model.UserRole;
+import net.exsorce.webpanel.rest.response.UserInfoResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,6 +41,7 @@ public class AuthenticationService
 	private final AuthenticationManager authenticationManager;
 
 	private final JWTService jwtService;
+	private final UserService userService;
 
 	public AuthenticationResponse register ( RegisterRequest request )
 	{
@@ -47,6 +49,7 @@ public class AuthenticationService
 				.firstname( request.getFirstname() )
 				.lastname( request.getLastname() )
 				.email( request.getEmail() )
+				.nickname( request.getUsername() )
 				.password( passwordEncoder.encode( request.getPassword() ) )
 				.role( UserRole.USER )
 				.build();
@@ -72,6 +75,20 @@ public class AuthenticationService
 		return AuthenticationResponse.builder()
 				.accessToken( jwt )
 				.refreshToken( refreshToken )
+				.build();
+	}
+
+	public UserInfoResponse getUser( String jwt )
+	{
+		User details = (User) userService.loadUserByUsername(jwtService.extractUserData(jwt.replace("Bearer ", "")));
+		if(details == null) return null;
+
+		return UserInfoResponse.builder()
+				.username(details.getNickname())
+				.firstname(details.getFirstname())
+				.lastname(details.getLastname())
+				.email(details.getEmail())
+				.role(details.getRole().name())
 				.build();
 	}
 

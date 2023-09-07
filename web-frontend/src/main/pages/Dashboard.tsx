@@ -1,4 +1,4 @@
-import {isAuthenticated} from "../services/AuthService";
+import {getUser} from "../services/AuthService";
 import {useEffect, useState} from "react";
 import NavBar from "./components/NavBar";
 import {useNavigate} from "react-router-dom";
@@ -6,25 +6,29 @@ import {useNavigate} from "react-router-dom";
 const Dashboard = () => {
 
     const navigate = useNavigate();
-    const [allowed, setAllowed] = useState(false);
+    const [caught, setCaught] = useState(false);
+    const [user, setUser] = useState();
 
     useEffect(() => {
         async function check() {
-            const value = await isAuthenticated();
+            const value :any = await getUser();
             if(!value) {
                 navigate('auth');
             }
+            setUser(value);
+            setCaught(true);
         }
 
-        if(!allowed) {
+        if(!caught) {
             check().catch(error => { });
         }
 
-    }, [allowed]);
+    }, [caught]);
 
     return (
         <>
-            <NavBar />
+            <NavBar user={user}/>
+
         </>
     );
 }

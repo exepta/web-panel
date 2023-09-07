@@ -1,6 +1,6 @@
 import '../../resources/pages/auth/auth.css';
 import {useEffect, useRef, useState} from "react";
-import {isAuthenticated, REST_POINT} from "../services/AuthService";
+import {REST_POINT} from "../services/AuthService";
 import axios from "axios";
 
 import GoogleIcon from '@mui/icons-material/Google';
@@ -91,7 +91,6 @@ const Authentication = () => {
             });
         }
 
-        console.log('Is Online: ' + await isAuthenticated());
         navigate('/');
     }
 
