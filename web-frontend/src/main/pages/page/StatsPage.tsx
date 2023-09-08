@@ -1,5 +1,9 @@
 const StatsPage = () => {
-    return (<div>Stats</div>);
+    return (
+        <div className="card">
+
+        </div>
+    );
 }
 
 export default StatsPage;

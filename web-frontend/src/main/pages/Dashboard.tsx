@@ -1,3 +1,5 @@
+import '../../resources/pages/dashboard/dashboard.css'
+
 import {getUser} from "../services/AuthService";
 import {useEffect, useState} from "react";
 import NavBar from "./components/NavBar";
@@ -30,7 +32,9 @@ const Dashboard = () => {
         <>
             <NavBar user={user}/>
             <SideBar />
-            <Outlet />
+            <div className="main-container">
+                <Outlet />
+            </div>
         </>
     );
 }
