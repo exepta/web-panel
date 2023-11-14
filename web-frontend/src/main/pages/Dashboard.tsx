@@ -26,7 +26,7 @@ const Dashboard = () => {
             check().catch(error => { });
         }
 
-    }, [caught]);
+    }, [caught, navigate]);
 
     return (
         <>

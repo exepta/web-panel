@@ -39,7 +39,7 @@ public class SecurityConfiguration
 		http.csrf( AbstractHttpConfigurer::disable )
 				.authorizeHttpRequests(builder -> builder
 						.requestMatchers(
-								antMatcher("/api/v0/auth/**"))
+								antMatcher("/api/v0/**"))
 						.permitAll()
 						.anyRequest()
 						.authenticated())
