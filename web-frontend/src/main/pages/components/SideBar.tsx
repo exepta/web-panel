@@ -5,6 +5,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import StorageIcon from '@mui/icons-material/Storage';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import LeagueTeams from '@mui/icons-material/Groups3';
 
 const SideBar = () => {
     return (
@@ -24,6 +25,14 @@ const SideBar = () => {
                         <b></b>
                         <span className="icon-span"><BarChartIcon className="icon"/></span>
                         <span className="side-text">Stats</span>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to='league-teams' className='side-link'>
+                        <b></b>
+                        <b></b>
+                        <span className="icon-span"><LeagueTeams className="icon"/></span>
+                        <span className="side-text">League Teams</span>
                     </NavLink>
                 </li>
                 <li>

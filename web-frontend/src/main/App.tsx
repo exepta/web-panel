@@ -6,6 +6,7 @@ import ErrorPage from "./pages/ErrorPage";
 import StatsPage from "./pages/page/StatsPage";
 import {EventPage} from "./pages/page/EventPage";
 import {PrivateServerPage} from "./pages/page/PrivateServerPage";
+import {LeagueTeamsPage} from "./pages/page/LeagueTeamsPage";
 
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 
@@ -17,6 +18,7 @@ function App() {
                   <Dashboard />
               </React.Suspense>}>
               <Route path='stats' element={<StatsPage />} />
+              <Route path='league-teams' element={<LeagueTeamsPage />} />
               <Route path='events' element={<EventPage />} />
               <Route path='private-servers' element={<PrivateServerPage />} />
           </Route>
