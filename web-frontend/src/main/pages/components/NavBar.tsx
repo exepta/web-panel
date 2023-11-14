@@ -21,7 +21,6 @@ const showSideBar = () => {
 }
 
 const NavBar = (props :any) => {
-    // Todo: give via props username and role
 
     if(props.user === undefined) {
         return (<div>Loading...</div>);

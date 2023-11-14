@@ -1,0 +1,33 @@
+.l-team-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.l-team-card .card-header h3 {
+    float: left;
+    font-size: 1.35rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.l-team-card .card-header span {
+    float: right;
+    font-size: 1.35rem;
+    font-weight: bold;
+    color: #626267;
+}
+
+.l-team-card .card-content {
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.l-team-card .card-content img {
+    width: 120px;
+    height: 120px;
+    border-radius: 10px;
+}

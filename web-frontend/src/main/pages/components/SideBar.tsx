@@ -9,7 +9,7 @@ import LeagueTeams from '@mui/icons-material/Groups3';
 
 const SideBar = () => {
     return (
-        <div className="side-bar" id="side">
+        <div className="side-bar side-bar-open" id="side">
             <ul>
                 <li>
                     <NavLink to='/' className="side-link">

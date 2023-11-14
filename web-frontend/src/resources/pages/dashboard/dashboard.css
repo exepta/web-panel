@@ -6,6 +6,7 @@
     box-sizing: border-box;
     padding: 20px 20px 20px 100px;
     transition: .6s all;
+    gap: 25px
 }
 
 .side-bar-open ~ .main-container {
@@ -22,7 +23,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: .4s all;
-    padding: 8px;
+    overflow: hidden;
 }
 
 .card:hover {
@@ -31,8 +32,60 @@
 
 .card-400 {
     width: 400px;
+    height: 200px;
 }
 
 .card-500 {
     width: 500px;
+    height: 250px;
+}
+
+.card-header {
+    float: left;
+    width: 100%;
+    height: 20%;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.card-content {
+    float: left;
+    width: 100%;
+    height: 70%;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.blank-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-footer {
+    float: left;
+    width: 100%;
+    height: 10%;
+    box-sizing: border-box;
+    background: #c843d2;
+}
+
+.card-footer-blank {
+    background: #fff;
+}
+
+.add-button {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 8px rgba(0, 0, 0 , 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-button .add-icon {
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.3);
 }
