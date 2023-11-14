@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import net.exsorce.webpanel.rest.response.LeagueTeamResponse;
 import net.exsorce.webpanel.service.LeagueTeamService;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +34,12 @@ public class LeagueTeamRestController
 		}
 
 		return ResponseEntity.ok( leagueTeamService.getByLocalizedName( UID ) );
+	}
+
+	@GetMapping("/teams")
+	public ResponseEntity< List<LeagueTeamResponse> > catchTeams ()
+	{
+		return ResponseEntity.ok( leagueTeamService.getAllTeams() );
 	}
 
 }
