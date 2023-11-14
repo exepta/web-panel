@@ -1,14 +1,17 @@
 import '../../../resources/pages/dashboard/league-teams.css'
-import teamImage from '../../../resources/images/pga.png';
 
 import {getTeams} from "../../services/LeagueService";
 
 import AddIcon from '@mui/icons-material/Add';
 import React, {useEffect, useState} from "react";
+import Card from "../components/Card";
+
 const LeagueTeamsPage = () => {
 
     const [teams, setTeams] :any = useState();
     const [caught, setCaught] = useState(false);
+
+    const [modalAdd, setModalAdd] = useState(false);
 
     useEffect(() => {
         async function check() {
@@ -21,7 +24,6 @@ const LeagueTeamsPage = () => {
             check().catch(error => { });
         }
 
-
     }, [caught]);
 
     if(teams === undefined)
@@ -29,9 +31,13 @@ const LeagueTeamsPage = () => {
         return (<div>Loading...</div>);
     }
 
+    const toggleAddModal = () => {
+        setModalAdd(!modalAdd);
+    }
+
     return (
         <>
-            <div className="card card-400 blank-card">
+            <div className="card card-400 blank-card" onClick={toggleAddModal}>
                 <div className="add-button">
                     <AddIcon className="add-icon"/>
                 </div>
@@ -40,20 +46,18 @@ const LeagueTeamsPage = () => {
                 teams.map((team :any, key :any) => {
                     return (
                         <>
-                            <div key={key} className="card card-400 l-team-card">
-                                <div className="card-header">
-                                    <h3>{team.name}</h3>
-                                    <span>{team.prefix}</span>
-                                </div>
-                                <div className="card-content">
-                                    <img src={teamImage} alt=""/>
-                                </div>
-                                <div className="card-footer" style={{"background": team.teamColor} as React.CSSProperties}></div>
-                            </div>
+                            <Card key={key} team={team} />
                         </>
                     );
                 })
             }
+            <div className={modalAdd ? 'modal-show' : 'modal-hide'}>
+                <div className="overlay" onClick={toggleAddModal}>
+                    <div className="container">
+
+                    </div>
+                </div>
+            </div>
         </>
     );
 }
