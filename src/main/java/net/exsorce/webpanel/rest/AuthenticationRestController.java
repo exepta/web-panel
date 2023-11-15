@@ -34,19 +34,16 @@ public class AuthenticationRestController
 	@PostMapping("/register")
 	public ResponseEntity<AbstractResponse> register (@RequestBody RegisterRequest request )
 	{
-		System.out.println("Before: " + request);
 		if(request == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponse.builder()
 					.message("Request was null!").code(HttpStatus.BAD_REQUEST.value()).build());
 		}
 
-		System.out.println(request);
-		System.out.println("Test: " + userService.loadUserByUsername(request.getEmail()));
 		if(userService.exist( request.getEmail() )) {
 			return ResponseEntity.status(HttpStatus.FOUND).body(ErrorResponse.builder()
 					.message("E-Mail already in use!").code(HttpStatus.FOUND.value()).build());
 		}
-		System.out.println("OK");
+
 		return ResponseEntity.ok( authenticationService.register( request ) );
 	}
 

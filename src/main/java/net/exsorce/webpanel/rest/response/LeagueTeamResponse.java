@@ -21,9 +21,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class LeagueTeamResponse extends AbstractResponse
 {
 
-	@JsonProperty("localizedName")
-	private String localizedName;
-
 	@JsonProperty("name")
 	private String name;
 

@@ -1,8 +1,11 @@
 package net.exsorce.webpanel.model.league;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +13,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import net.exsorce.webpanel.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Daniel Ramke
@@ -46,7 +53,12 @@ public class LeagueTeam
 	@Column(length = 50)
 	private String teamColor;
 
-	//Todo: members
+	@ManyToOne
+	@JoinColumn( name = "leader_id" )
+	private User leader;
+
+	@ElementCollection
+	private List<User> members = new ArrayList<>();
 
 
 	

@@ -1,9 +1,15 @@
 package net.exsorce.webpanel.service;
 
 import lombok.RequiredArgsConstructor;
+import net.exsorce.webpanel.model.User;
 import net.exsorce.webpanel.model.league.LeagueTeam;
 import net.exsorce.webpanel.repositories.LeagueTeamRepository;
+import net.exsorce.webpanel.repositories.UserRepository;
+import net.exsorce.webpanel.rest.request.LeagueTeamCreateRequest;
+import net.exsorce.webpanel.rest.response.AbstractResponse;
 import net.exsorce.webpanel.rest.response.LeagueTeamResponse;
+import net.exsorce.webpanel.rest.response.UserInfoResponse;
+import net.exsorce.webpanel.utils.Commons;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,18 +27,45 @@ public class LeagueTeamService
 {
 
 	private final LeagueTeamRepository leagueTeamRepository;
+	private final UserRepository userRepository;
+
+	private final AuthenticationService authenticationService;
+
+	public LeagueTeamResponse createTeam ( LeagueTeamCreateRequest request, String token )
+	{
+		UserInfoResponse userInfoResponse = authenticationService.getUser( token );
+		User user = userRepository.findByEmail( userInfoResponse.getEmail() ).orElseThrow();
+		LeagueTeam team = LeagueTeam.builder()
+				.localizedName( "" )
+				.name( request.getName() )
+				.description( request.getDescription() )
+				.dateOfCreation( Commons.currentDate() )
+				.prefix( request.getPrefix() )
+				.teamColor( request.getTeamColor() )
+				.build();
+
+		LeagueTeam saved = leagueTeamRepository.save( team );
+		return LeagueTeamResponse.builder()
+				.name( saved.getName() )
+				.prefix( saved.getPrefix() )
+				.dateOfCreation( saved.getDateOfCreation() )
+				.teamColor( saved.getTeamColor() )
+				.description( saved.getDescription() )
+				.build();
+	}
 
 	public LeagueTeamResponse getByLocalizedName ( String localizedName )
 	{
-		System.out.println(localizedName);
 		LeagueTeam team = leagueTeamRepository.findByLocalizedName( localizedName ).orElse( null );
-		System.out.println(team);
 		if(team == null) {
-			return LeagueTeamResponse.builder().build();
+			team = leagueTeamRepository.findByName( localizedName ).orElse( null );
+			if(team == null)
+			{
+				return LeagueTeamResponse.builder().build();
+			}
 		}
 
 		return LeagueTeamResponse.builder()
-				.localizedName( localizedName )
 				.name( team.getName() )
 				.prefix( team.getPrefix() )
 				.description( team.getDescription() )
@@ -48,7 +81,6 @@ public class LeagueTeamService
 		for(LeagueTeam team : teams)
 		{
 			responses.add( LeagueTeamResponse.builder()
-					.localizedName( team.getLocalizedName() )
 					.name( team.getName() )
 					.prefix( team.getPrefix() )
 					.description( team.getDescription() )
@@ -60,4 +92,11 @@ public class LeagueTeamService
 		return responses;
 	}
 
+	public boolean existTeam ( String localizedName )
+	{
+		if(localizedName == null || localizedName.isBlank() || localizedName.isEmpty())
+			return false;
+
+		return getByLocalizedName( localizedName ) != null;
+	}
 }

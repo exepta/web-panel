@@ -1,5 +1,6 @@
 package net.exsorce.webpanel.model;
 
+import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -28,6 +29,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @RequiredArgsConstructor
 @Builder
 @AllArgsConstructor
+@Embeddable
 @Entity
 @Table(name = "_user")
 public class User implements UserDetails
@@ -35,6 +37,7 @@ public class User implements UserDetails
 
 	@Id
 	@GeneratedValue
+	//Todo: make me to Long
 	private Integer id;
 
 	private String firstname;

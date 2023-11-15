@@ -1,10 +1,14 @@
 import '../../../resources/pages/dashboard/league-teams.css'
+import '../../../resources/pages/element/modal.css'
 
 import {getTeams} from "../../services/LeagueService";
+import {REST_POINT} from "../../services/LeagueService";
+import axios from "axios";
 
 import AddIcon from '@mui/icons-material/Add';
 import React, {useEffect, useState} from "react";
 import Card from "../components/Card";
+import Modal from "../components/Modal";
 
 const LeagueTeamsPage = () => {
 
@@ -51,13 +55,7 @@ const LeagueTeamsPage = () => {
                     );
                 })
             }
-            <div className={modalAdd ? 'modal-show' : 'modal-hide'}>
-                <div className="overlay" onClick={toggleAddModal}>
-                    <div className="container">
-
-                    </div>
-                </div>
-            </div>
+            <Modal active={modalAdd} headline={"Create Team"} onBack={toggleAddModal}/>
         </>
     );
 }
